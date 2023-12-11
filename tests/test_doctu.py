@@ -1,19 +1,20 @@
+import allure
 from selene import have, be, by
 from selene.support.shared import browser
 
 
-
+@allure.title('Checking the logo display')
 def test_logo_display(setup_browser_1920_1080):
-
-    browser.open('/')
-
-    browser.element('.header__wrap_logo img').should(be.visible)
-
-    browser.element('.header__wrap_logo img').should(have.attribute('alt').value('doctu.ru'))
-
-    browser.element('.header__wrap_logo img').should(have.attribute('height').value('32'))
-
-    browser.element('.header__wrap_logo img').should(have.attribute('width').value('124'))
+    with allure.step('Open home page'):
+        browser.open('/')
+    with allure.step('Make sure the logo is displayed'):
+        browser.element('.header__wrap_logo img').should(be.visible)
+    with allure.step('Check that the logo contains the correct link to the image'):
+        browser.element('.header__wrap_logo img').should(have.attribute('src').value('https://doctu.ru/img/logo.svg'))
+    with allure.step('Check that the image height is 32px'):
+        browser.element('.header__wrap_logo img').should(have.attribute('height').value('32'))
+    with allure.step('Check that the image width is 124px'):
+        browser.element('.header__wrap_logo img').should(have.attribute('width').value('124'))
 
 
 def test_main_menu_elements(setup_browser_1920_1080):
@@ -92,13 +93,18 @@ def test_personal_cabinet_popup_display(setup_browser_1920_1080):
     personal_cabinet_popup.should(be.visible)
 
 
+@allure.title('Check burger menu display')
 def test_burger_menu_visible(setup_browser_960_1080):
-    # Откройте главную страницу
-    browser.open('/')
-
-    burger_menu = browser.element('.header__wrap_burger')
-
-    burger_menu.should(be.visible)
+    with allure.step('Open home page'):
+        browser.open('/')
+    with allure.step('Check that the burger menu is visible'):
+        burger_menu = browser.element('.header__wrap_burger')
+        burger_menu.should(be.visible)
+    with allure.step('Click on the burger menu'):
+        burger_menu.click()
+    with allure.step('Check that the menu expands'):
+        mobile_menu = browser.element(".main-menu__wrap")
+        mobile_menu.should(be.visible)
 
 def test_specialty_dropdown_visible_and_change(setup_browser_1920_1080):
     # Откройте главную страницу
