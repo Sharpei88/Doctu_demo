@@ -19,7 +19,7 @@ def setup_browser_1920_1080():
 
 
 @pytest.fixture(scope='function')
-def setup_browser_974_1080():
+def setup_browser_960_1080():
     driver_options = webdriver.ChromeOptions()
     driver_options.add_argument('--headless')
     browser.config.driver_options = driver_options

@@ -92,7 +92,7 @@ def test_personal_cabinet_popup_display(setup_browser_1920_1080):
     personal_cabinet_popup.should(be.visible)
 
 
-def test_burger_menu_visible(setup_browser_974_1080):
+def test_burger_menu_visible(setup_browser_960_1080):
     # Откройте главную страницу
     browser.open('/')
 
