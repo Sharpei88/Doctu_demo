@@ -1,6 +1,6 @@
 from selene import have, be, by
 from selene.support.shared import browser
-from selene.support.shared.jquery_style import s
+
 
 
 def test_logo_display(setup_browser_1920_1080):
