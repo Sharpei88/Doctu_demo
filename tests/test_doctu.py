@@ -7,6 +7,7 @@ from selene.support.shared import browser
 def test_logo_display(setup_browser_1920_1080):
     with allure.step('Open home page'):
         browser.open('/')
+
     with allure.step('Make sure the logo is displayed'):
         browser.element('.header__wrap_logo img').should(be.visible)
     with allure.step('Check that the logo contains the correct link to the image'):
@@ -17,39 +18,69 @@ def test_logo_display(setup_browser_1920_1080):
         browser.element('.header__wrap_logo img').should(have.attribute('width').value('124'))
 
 
+@allure.title('Check the operation of the "All cityes" button')
+def test_all_cityes_button(setup_browser_1920_1080):
+    with allure.step('Open home page'):
+        browser.open('/')
+
+    with allure.step('Click on the "All cities" button'):
+        all_cities_button = browser.element('[class="btn btn-white-green home-citys__all"]')
+        all_cities_button.click()
+    with allure.step('Check that the transition to the desired page occurs'):
+        browser.should(have.url_containing('/regions'))
+    with allure.step('Select a city Petrozavodsk from the list'):
+        browser.all('.home-citys__list a .item__title').element_by(have.exact_text('Петрозаводск')).click()
+
+    with allure.step('Check that the city of Petrozavodsk is selected'):
+        city_in_header = browser.element('.header-place')
+        city_in_header.should(have.exact_text('Петрозаводск'))
+
+
+@allure.title('Check the main menu in the header')
 def test_main_menu_elements(setup_browser_1920_1080):
-    # Откройте главную страницу
-    browser.open('/')
+    with allure.step('Open home page'):
+        browser.open('/')
 
-    # Выберите город
-    all_citys_button = browser.element('[class="btn btn-white-green home-citys__all"]')
-    all_citys_button.click()
-    browser.all('.home-citys__list a .item__title').element_by(have.exact_text('Петрозаводск')).click()
+    with allure.step('Select a city Petrozavodsk'):
+        all_citys_button = browser.element('[class="btn btn-white-green home-citys__all"]')
+        all_citys_button.click()
+        browser.all('.home-citys__list a .item__title').element_by(have.exact_text('Петрозаводск')).click()
 
-    # Найдите элементы меню
-    doctors_menu_item = browser.element(".main-menu__menu a[href='/petrozavodsk/doctors']")
-    clinics_menu_item = browser.element(".main-menu__menu a[href='/petrozavodsk/clinics']")
-    services_menu_item = browser.element(".main-menu__menu a[href='/petrozavodsk/services']")
-    consultations_menu_item = browser.element(".main-menu__menu a[href='/consult']")
+    with allure.step('Check the visibility of the "Doctors" element'):
+        doctors_menu_item = browser.element(".main-menu__menu a[href='/petrozavodsk/doctors']")
+        doctors_menu_item.should(be.visible)
+    with allure.step('Check that the "Doctors" element contains the correct text'):
+        doctors_menu_item.should(have.exact_text('Врачи'))
+    with allure.step('Check that when you click on the “Doctors” element, you go to the corresponding page'):
+        doctors_menu_item.click()
+        browser.should(have.url_containing('/petrozavodsk/doctors'))
 
-    # Проверьте наличие элементов меню
-    doctors_menu_item.should(be.visible).should(have.exact_text('Врачи'))
-    clinics_menu_item.should(be.visible).should(have.exact_text('Клиники'))
-    services_menu_item.should(be.visible).should(have.exact_text('Услуги'))
-    consultations_menu_item.should(be.visible).should(have.exact_text('Консультации'))
+    with allure.step('Check the visibility of the "Clinics" element'):
+        clinics_menu_item = browser.element(".main-menu__menu a[href='/petrozavodsk/clinics']")
+        clinics_menu_item.should(be.visible)
+    with allure.step('Check that the "Clinics" element contains the correct text'):
+        clinics_menu_item.should(have.exact_text('Клиники'))
+    with allure.step('Check that when you click on the “Clinics” element, you go to the corresponding page'):
+        clinics_menu_item.click()
+        browser.should(have.url_containing('/petrozavodsk/clinics'))
 
-    # Кликните на каждый элемент и проверьте переход на соответствующую страницу
-    doctors_menu_item.click()
-    browser.should(have.url_containing('/petrozavodsk/doctors'))
+    with allure.step('Check the visibility of the "Services" element'):
+        services_menu_item = browser.element(".main-menu__menu a[href='/petrozavodsk/services']")
+        services_menu_item.should(be.visible)
+    with allure.step('Check that the "Services" element contains the correct text'):
+        services_menu_item.should(have.exact_text('Услуги'))
+    with allure.step('Check that when you click on the “Services” element, you go to the corresponding page'):
+        services_menu_item.click()
+        browser.should(have.url_containing('/petrozavodsk/services'))
 
-    clinics_menu_item.click()
-    browser.should(have.url_containing('/petrozavodsk/clinics'))
-
-    services_menu_item.click()
-    browser.should(have.url_containing('/petrozavodsk/services'))
-
-    consultations_menu_item.click()
-    browser.should(have.url_containing('/consult'))
+    with allure.step('Check the visibility of the "Services" element'):
+        consultations_menu_item = browser.element(".main-menu__menu a[href='/consult']")
+        consultations_menu_item.should(be.visible)
+    with allure.step('Check that the "Services" element contains the correct text'):
+        consultations_menu_item.should(have.exact_text('Консультации'))
+    with allure.step('Check that when you click on the “Services” element, you go to the corresponding page'):
+        consultations_menu_item.click()
+        browser.should(have.url_containing('/consult'))
 
 
 def test_location_display_and_change(setup_browser_1920_1080):
@@ -106,33 +137,38 @@ def test_burger_menu_visible(setup_browser_960_1080):
         mobile_menu = browser.element(".main-menu__wrap")
         mobile_menu.should(be.visible)
 
+
+@allure.title("Checking the search string for doctor's specialty")
 def test_specialty_dropdown_visible_and_change(setup_browser_1920_1080):
-    # Откройте главную страницу
-    browser.open('/')
+    with allure.step('Open home page'):
+        browser.open('/')
 
-    # Проверьте, что поле выбора специальности врача отображается
-    specialty_dropdown = browser.element('.vs__search')
-    specialty_dropdown.should(be.visible)
+    with allure.step("Field for selecting a doctor's specialty is visible"):
+        specialty_dropdown = browser.element('.vs__search')
+        specialty_dropdown.should(be.visible)
 
-    # Выберите специальность "хирург"
-    specialty_dropdown.type('хирург')
+    with allure.step('Type "surgeon" in the specialty selection field'):
+        specialty_dropdown.type('хирург')
 
-    browser.element('.vs__dropdown-menu').element(by.text('Хирург')).click()
+    with allure.step('Click on the "Surgeon" line'):
+        browser.element('.vs__dropdown-menu').element(by.text('Хирург')).click()
 
-    # Проверьте, что выбранная специальность отображается в поле
-    selected_specialty = browser.element('.vs__selected-options')
-    selected_specialty.should(have.exact_text('Хирург'))
+    with allure.step('Check that the selected specialty is displayed in the specialty selection field'):
+        selected_specialty = browser.element('.vs__selected-options')
+        selected_specialty.should(have.exact_text('Хирург'))
 
 
+@allure.title('Check that the "Find" button is visible and contains the correct text')
 def test_search_button_visible(setup_browser_1920_1080):
-    # Откройте главную страницу
-    browser.open('/')
+    with allure.step('Open home page'):
+        browser.open('/')
 
-    # Проверьте, что кнопка "Найти" отображается на странице
-    search_button = browser.element('.btn')
+    with allure.step('Check that the “Find” button is visible'):
+        search_button = browser.element('.btn')
+        search_button.should(be.visible)
 
-    # Проверьте, что кнопка "Найти" является видимой
-    search_button.should(be.visible)
+    with allure.step('Check that the "Find" button contains text "Найти"'):
+        search_button.should(have.exact_text('Найти'))
 
 
 def test_check_correct_link_after_click_all_citys_button(setup_browser_1920_1080):
