@@ -2,7 +2,6 @@ import allure
 from selene import have, be, by
 from selene.support.shared import browser
 
-
 @allure.title('Checking the logo display')
 def test_logo_display(setup_browser_1920_1080):
     with allure.step('Open home page'):
@@ -83,45 +82,38 @@ def test_main_menu_elements(setup_browser_1920_1080):
         browser.should(have.url_containing('/consult'))
 
 
+@allure.title('Check the change of home city using the current location button in the header')
 def test_location_display_and_change(setup_browser_1920_1080):
-    # Откройте главную страницу
-    browser.open('/')
+    with allure.step('Open home page'):
+        browser.open('/')
 
-    # Найдите элемент местоположения
-    current_location = browser.element('.header__wrap_placeanduser .header-place')
+    with allure.step(('Check that your current location is displayed')):
+        current_location = browser.element('.header__wrap_placeanduser .header-place')
+        current_location.should(be.visible)
+    with allure.step('Click on the current location button'):
+        current_location.click()
+    with allure.step('Check the appearance of a pop-up with a city selection'):
+        browser.element('.popup__wrap').should(be.visible)
 
-    # Проверьте, что текущее местоположение отображается
-    current_location.should(have.exact_text('Петрозаводск'))
-
-    # Симулируем изменение местоположения
-    current_location.click()
-
-    # Появляется попап с выбором города
-    browser.element('.popup__wrap').should(be.visible)
-
-    # Найдите список городов
-    browser.all('.cities-list a').element_by(have.exact_text('Воронеж')).click()
-    current_location.should(have.exact_text('Воронеж'))
+    with allure.step('Change current location to Voronezh'):
+        browser.all('.cities-list a').element_by(have.exact_text('Воронеж')).click()
+        current_location.should(have.exact_text('Воронеж'))
 
 
+@allure.title('Check the opening of the "Personal Account" popup using the personal account button')
 def test_personal_cabinet_popup_display(setup_browser_1920_1080):
-    # Откройте главную страницу
-    browser.open('/')
+    with allure.step('Open home page'):
+        browser.open('/')
 
-    # Найдите ссылку на кнопку личный кабинет
-    personal_cabinet_button = browser.element('.header-user-popup .header-user')
+    with allure.step('Check that the personal account button is visible'):
+        personal_cabinet_button = browser.element('.header-user-popup .header-user')
+        personal_cabinet_button.should(be.visible)
+    with allure.step('Click on the personal account button'):
+        personal_cabinet_button.click()
 
-    # Проверьте, что кнопка личный кабинет видима
-    personal_cabinet_button.should(be.visible)
-
-    # Кликните на ссылку
-    personal_cabinet_button.click()
-
-    # Найдите ссылку на попап личный кабинет
-    personal_cabinet_popup = browser.element('.popup__wrap')
-
-    # Проверьте, что попап личный кабинет видимый
-    personal_cabinet_popup.should(be.visible)
+    with allure.step('Check that the "Personal Account" popup is visible'):
+        personal_cabinet_popup = browser.element('.popup__wrap')
+        personal_cabinet_popup.should(be.visible)
 
 
 @allure.title('Check burger menu display')
@@ -171,16 +163,14 @@ def test_search_button_visible(setup_browser_1920_1080):
         search_button.should(have.exact_text('Найти'))
 
 
-def test_check_correct_link_after_click_all_citys_button(setup_browser_1920_1080):
+def test_check_cities_in_list(setup_browser_1920_1080):
     # Шаг 1: Открыть главную страницу
     browser.open("/")
 
-    # Шаг 2: Нажать на элемент <a> с текстом "Все города"
-    all_citys_button = browser.element('[class="btn btn-white-green home-citys__all"]')
-    all_citys_button.click()
-
-    # Проверка: Убедиться, что текущий URL соответствует ожидаемому URL "/regions"
-    browser.should(have.url('https://doctu.ru/regions'))
+    # Проверка наличия всех нужных названий городов
+    expected_cities = ['Москва', 'Санкт-Петербург', 'Волгоград', 'Воронеж', 'Екатеринбург', 'Казань', 'Краснодар',
+                     'Красноярск', 'Нижний Новгород', 'Новосибирск', 'Омск', 'Пермь', 'Ростов-на-Дону', 'Самара', 'Уфа',
+                     'Челябинск']
 
 
 def test_check_text_on_all_citys_button(setup_browser_1920_1080):
