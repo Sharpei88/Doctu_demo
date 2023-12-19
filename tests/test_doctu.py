@@ -1,7 +1,7 @@
 import allure
 from selene import have, be, by
-from selene.core import query
 from selene.support.shared import browser
+
 
 @allure.title('Checking the logo display')
 def test_logo_display(setup_browser_1920_1080):
