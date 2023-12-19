@@ -1,0 +1,10 @@
+{'level': 'WARNING', 'message': "security - Error with Permissions-Policy header: Unrecognized feature: 'browsing-topics'.", 'source': 'security', 'timestamp': 1703014672654}
+{'level': 'WARNING', 'message': "security - Error with Permissions-Policy header: Unrecognized feature: 'interest-cohort'.", 'source': 'security', 'timestamp': 1703014672654}
+{'level': 'SEVERE', 'message': 'https://doctu.ru/ - Failed to load resource: the server responded with a status of 403 ()', 'source': 'network', 'timestamp': 1703014672656}
+{'level': 'SEVERE', 'message': 'https://doctu.ru/favicon.ico - Failed to load resource: the server responded with a status of 403 ()', 'source': 'network', 'timestamp': 1703014672817}
+{'level': 'SEVERE', 'message': 'https://doctu.ru/favicon.ico - Failed to load resource: the server responded with a status of 403 ()', 'source': 'network', 'timestamp': 1703014672817}
+{'level': 'WARNING', 'message': "security - Error with Permissions-Policy header: Unrecognized feature: 'browsing-topics'.", 'source': 'security', 'timestamp': 1703014676651}
+{'level': 'WARNING', 'message': "security - Error with Permissions-Policy header: Unrecognized feature: 'interest-cohort'.", 'source': 'security', 'timestamp': 1703014676651}
+{'level': 'SEVERE', 'message': 'https://doctu.ru/ - Failed to load resource: the server responded with a status of 403 ()', 'source': 'network', 'timestamp': 1703014676651}
+{'level': 'SEVERE', 'message': 'https://doctu.ru/favicon.ico - Failed to load resource: the server responded with a status of 403 ()', 'source': 'network', 'timestamp': 1703014676749}
+{'level': 'SEVERE', 'message': 'https://doctu.ru/favicon.ico - Failed to load resource: the server responded with a status of 403 ()', 'source': 'network', 'timestamp': 1703014676749}
