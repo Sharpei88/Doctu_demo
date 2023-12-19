@@ -1,5 +1,6 @@
 import allure
 from selene import have, be, by
+from selene.core import query
 from selene.support.shared import browser
 
 @allure.title('Checking the logo display')
@@ -163,20 +164,28 @@ def test_search_button_visible(setup_browser_1920_1080):
         search_button.should(have.exact_text('Найти'))
 
 
-def test_check_cities_in_list(setup_browser_1920_1080):
-    # Шаг 1: Открыть главную страницу
-    browser.open("/")
+@allure.title('Check the list of popular cities')
+def test_check_list_of_popular_cities(setup_browser_1920_1080):
+    with allure.step('Open home page'):
+        browser.open('/')
 
-    # Проверка наличия всех нужных названий городов
-    expected_cities = ['Москва', 'Санкт-Петербург', 'Волгоград', 'Воронеж', 'Екатеринбург', 'Казань', 'Краснодар',
-                     'Красноярск', 'Нижний Новгород', 'Новосибирск', 'Омск', 'Пермь', 'Ростов-на-Дону', 'Самара', 'Уфа',
-                     'Челябинск']
+    with allure.step('Make a list of the necessary cities'):
+        expected_cities = ['Москва', 'Санкт-Петербург', 'Волгоград', 'Воронеж', 'Екатеринбург', 'Казань', 'Краснодар',
+                           'Красноярск', 'Нижний Новгород', 'Новосибирск', 'Омск', 'Пермь', 'Ростов-на-Дону',
+                           'Самара', 'Уфа', 'Челябинск']
+
+    with allure.step('Check the names of the required cities'):
+        browser.all('.home-citys__list').all('.item__title').should(have.texts(expected_cities))
 
 
+@allure.title('Check that the “All Cities” button is visible and contains the required text.')
 def test_check_text_on_all_citys_button(setup_browser_1920_1080):
-    # Шаг 1: Открыть главную страницу
-    browser.open("/")
+    with allure.step('Open home page'):
+        browser.open("/")
 
-    # Проверка: Убедиться, что текст элемента <a> равен "Все города"
-    all_citys_button = browser.element('[class="btn btn-white-green home-citys__all"]')
-    all_citys_button.should(have.exact_text('Все города'))
+    with allure.step('Make sure the "All Cities" button is visible'):
+        all_citys_button = browser.element('[class="btn btn-white-green home-citys__all"]')
+        all_citys_button.should(be.visible)
+
+    with allure.step('Make sure the element text is "All Cities"'):
+        all_citys_button.should(have.exact_text('Все города'))
